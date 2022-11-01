@@ -1,0 +1,57 @@
+subscription_id = "replace me"
+tenant_id       = "replace me"
+client_id       = "replace me"
+client_secret   = "replace me"
+
+resource_group_name = "avsftp-rg"
+location            = "East US"
+
+avsftp_vnet_name                             = "avsftp-vnet"
+avsftp_vnet_address_space                    = ["10.0.0.0/16"]
+avsftp_vnet_function_subnet_address_prefixes = ["10.0.0.0/24"]
+avsftp_vnet_vm_subnet_address_prefixes       = ["10.0.1.0/24"]
+avsftp_vnet_sftp_subnet_address_prefixes     = ["10.0.2.0/24"]
+avsftp_vnet_function_subnet_name             = "function-snet"
+avsftp_vnet_vm_subnet_name                   = "vm-snet"
+avsftp_vnet_sftp_subnet_name                 = "sftp-snet"
+
+av_storage_account_name                               = "avscansa"
+av_storage_account_kind                               = "StorageV2"
+av_storage_account_tier                               = "Standard"
+av_storage_account_replication_type                   = "LRS"
+sftp_storage_account_name                             = "sftpsa"
+sftp_storage_account_kind                             = "StorageV2"
+sftp_storage_account_tier                             = "Standard"
+sftp_storage_account_replication_type                 = "LRS"
+sftp_storage_accounts_new_files_container_name        = "new-files"
+sftp_storage_accounts_clean_files_container_name      = "clean-files"
+sftp_storage_accounts_quarantine_files_container_name = "quarantine-files"
+
+#avsftp_key_vault_name                      = "avsftp-kv"
+#av_storage_account_key_vault_secret_name   = "avsecret"
+#sftp_storage_account_key_vault_secret_name = "sftpsecret"
+
+av_app_service_plan_name = "avsftp-appservice-plan"
+av_function_app_name     = "avsftp-functionapp"
+
+av_vm_name                        = "av-vm"
+av_vm_size                        = "Standard_B1ms"
+av_vm_computer_name               = "AntivirusVm"
+av_vm_username                    = "adminuser"
+av_vm_password                    = "P@55w0rd1234"
+av_vm_network_interface_name      = "av-vm-network-interface"
+av_vm_ip_config_name              = "av-vm-ipconfig"
+av_vm_osdisk_name                 = "av-vm-osdisk-1"
+av_vm_osdisk_caching              = "ReadWrite"
+av_vm_osdisk_storage_account_type = "Standard_LRS"
+av_vm_osdisk_size                 = 32
+av_vm_source_img_ref_publisher    = "MicrosoftWindowsServer"
+av_vm_source_img_ref_offer        = "WindowsServer"
+av_vm_source_img_ref_sku          = "2019-Datacenter-smalldisk"
+av_vm_source_img_ref_version      = "latest"
+
+avsftp_nsg_name = "avsftp-nsg"
+
+scan_upload_blob_function_url = "https://github.com/Azure/azure-storage-av-automation/releases/latest/download/ScanUploadedBlobFunction.zip"
+scan_http_server_url          = "https://github.com/Azure/azure-storage-av-automation/releases/latest/download/ScanHttpServer.zip"
+vm_init_script_url            = "https://github.com/Azure/azure-storage-av-automation/releases/latest/download/VMInit.ps1"
