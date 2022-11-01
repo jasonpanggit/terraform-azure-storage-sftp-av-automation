@@ -6,5 +6,4 @@ Not supported/yet to do
 1. Enabling SFTP (need to manually enable it in Azure Portal)
 2. Add local users
 
-Credits
-This repository is based on https://github.com/Azure/azure-storage-av-automation which is an ARM template
+Note: This repository is based on https://github.com/Azure/azure-storage-av-automation which is an ARM template
