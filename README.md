@@ -23,7 +23,7 @@ List of created resources:
 
 ## Project Structure
 zip folder - containing the function app zip file which will be uploaded to deployment-files container in AV storage account and used in WEBSITE_RUN_FROM_PACKAGE
-avsftp.tfvars.template - TRVARS template containing sample parameters values
+avsftp.tfvars.template - TFVARS template containing sample parameters values
 
 ## Deployment Steps
 1. Use the following command to clone the repo
@@ -40,4 +40,6 @@ avsftp.tfvars.template - TRVARS template containing sample parameters values
 2. Saving storage access details in Azure Key Vault (MSI cannot be used in function app because key vault access policy creation requires function app to be created first in order to get the object id) 
 
 ## Credits/References
-This repository is based on https://github.com/Azure/azure-storage-av-automation which is using ARM template.
+1. This repository is based on https://github.com/Azure/azure-storage-av-automation which is using ARM template.
+2. My repo for ScanUploadedBlobFunction which fixed some HTTP client bugs in the above repo which cause access restriction - https://github.com/jasonpanggit/scan-uploaded-blob-function
+3. My repo for ScanHTTPServer which is running in the VM waiting to scan the uploaded file - https://github.com/jasonpanggit/scan-http-server
