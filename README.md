@@ -30,8 +30,10 @@ avsftp.tfvars.template - TRVARS template containing sample parameters values
    ```
    git clone https://github.com/jasonpanggit/terraform-azure-storage-sftp-av-automation.git
    ``` 
-2. Rename avsftp.tfvars.template to avsftp.tfvars and change the necessary parameters (Important: remember to set the expiry date of the SAS token used for function app deployment)
-3. Go to SFTP storage account resource in Azure portal, open SFTP blade, enable SFTP and add local user with SSH password/key
+2. Rename avsftp.tfvars.template to avsftp.tfvars and change the necessary parameter values to whatever you need (Important: remember to set the expiry date of the SAS token used for function app deployment to something short like a day or even shorted than that)
+3. Go to SFTP storage account resource in Azure portal, open SFTP blade, enable SFTP, add the new-files container and other containers (e.g. quarantine-files, clean-files) if you want, set the necessary access permissions to the container(s) added, set the home directory to "new-files" and add local user with SSH password/key (Note: if you are using SSH password, copy the password generated into Notepad before closing the window because you won't be able to retrieve it again and will need to re-generate it again)
+4. Enable App Insights in Function App (optional) if you want
+5. Open WinSCP and enter the credentials (SSH password/key) and upload a virus file into the new-files container ()to test it out (Note: if you are using SSH key, you can use PuttyGEN to convert the PEM file generated in Azure to PPK file which most SFTP client uses)
     
 ## Not supported/yet to do
 1. Enabling SFTP (need to manually enable it in Azure Portal) and adding local users
