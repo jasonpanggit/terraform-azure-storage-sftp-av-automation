@@ -44,8 +44,8 @@ resource "azurerm_storage_blob" "functionapp_zip" {
 data "azurerm_storage_account_sas" "sas" {
   connection_string = azurerm_storage_account.av_storage_account.primary_connection_string
   https_only        = true
-  start             = "2022-11-02"
-  expiry            = "2022-11-03"
+  start             = var.sas_token_expiry_start
+  expiry            = var.sas_token_expiry_end
   resource_types {
     object    = true
     container = false

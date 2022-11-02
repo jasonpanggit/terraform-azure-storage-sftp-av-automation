@@ -34,6 +34,8 @@ variable "sftp_storage_account_replication_type" {}
 variable "sftp_storage_accounts_new_files_container_name" {}
 variable "sftp_storage_accounts_clean_files_container_name" {}
 variable "sftp_storage_accounts_quarantine_files_container_name" {}
+variable "sas_token_expiry_start" {}
+variable "sas_token_expiry_end" {}
 
 # Key Vaults
 #variable "avsftp_key_vault_name" {}
