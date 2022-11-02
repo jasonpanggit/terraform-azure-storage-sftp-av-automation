@@ -52,6 +52,6 @@ av_vm_source_img_ref_version      = "latest"
 
 avsftp_nsg_name = "avsftp-nsg"
 
-scan_upload_blob_function_url = "https://github.com/Azure/azure-storage-av-automation/releases/latest/download/ScanUploadedBlobFunction.zip"
-scan_http_server_url          = "https://github.com/Azure/azure-storage-av-automation/releases/latest/download/ScanHttpServer.zip"
-vm_init_script_url            = "https://github.com/Azure/azure-storage-av-automation/releases/latest/download/VMInit.ps1"
+scan_http_server_url          = "https://github.com/jasonpanggit/terraform-azure-storage-sftp-av-automation/releases/download/0.0.1/ScanHttpServer.Zip"
+vm_init_script_url            = "https://github.com/jasonpanggit/terraform-azure-storage-sftp-av-automation/releases/download/0.0.1/VMInit.ps1"
+functionapp_zip               = "./zip/ScanUploadedBlobFunction.zip"

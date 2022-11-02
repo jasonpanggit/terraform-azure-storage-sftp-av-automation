@@ -67,6 +67,6 @@ variable "av_vm_network_interface_name" {}
 variable "avsftp_nsg_name" {}
 
 # Zip files for function and AV scanner
-variable "scan_upload_blob_function_url" {}
 variable "scan_http_server_url" {}
 variable "vm_init_script_url" {}
+variable "functionapp_zip" {}

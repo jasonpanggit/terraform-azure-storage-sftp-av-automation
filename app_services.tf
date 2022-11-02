@@ -1,12 +1,14 @@
-resource "azurerm_app_service_plan" "av_app_service_plan" {
+resource "azurerm_service_plan" "av_app_service_plan" {
   name                = "${random_string.name_prefix.result}-${var.av_app_service_plan_name}"
   resource_group_name = azurerm_resource_group.avsftp_rg.name
   location            = azurerm_resource_group.avsftp_rg.location
-  kind                = "FunctionApp"
-  sku {
-    tier = "Standard"
-    size = "S1"
-  }
+  #kind                = "FunctionApp"
+  sku_name = "S1"
+  os_type  = "Windows"
+  #sku {  
+  #  tier = "Standard"
+  #  size = "S1"
+  #}
   depends_on = [azurerm_resource_group.avsftp_rg]
 }
 
@@ -14,7 +16,7 @@ resource "azurerm_windows_function_app" "av_function_app" {
   name                = "${random_string.name_prefix.result}-${var.av_function_app_name}"
   resource_group_name = azurerm_resource_group.avsftp_rg.name
   location            = azurerm_resource_group.avsftp_rg.location
-  service_plan_id     = azurerm_app_service_plan.av_app_service_plan.id
+  service_plan_id     = azurerm_service_plan.av_app_service_plan.id
 
   identity {
     type = "SystemAssigned"
@@ -34,16 +36,17 @@ resource "azurerm_windows_function_app" "av_function_app" {
   storage_account_access_key = azurerm_storage_account.av_storage_account.primary_access_key
 
   app_settings = {
-    "cleanContainerName"                       = var.sftp_storage_accounts_clean_files_container_name
-    "malwareContainerName"                     = var.sftp_storage_accounts_quarantine_files_container_name
-    "targetContainerName"                      = var.sftp_storage_accounts_new_files_container_name
+    "clean_files_container_name"               = var.sftp_storage_accounts_clean_files_container_name
+    "quarantine_files_container_name"          = var.sftp_storage_accounts_quarantine_files_container_name
+    "new_files_container_name"                 = var.sftp_storage_accounts_new_files_container_name
     "AzureWebJobsStorage"                      = "DefaultEndpointsProtocol=https;AccountName=${azurerm_storage_account.av_storage_account.name};AccountKey=${azurerm_storage_account.av_storage_account.primary_access_key};EndpointSuffix=core.windows.net"
-    "FUNCTIONS_WORKER_RUNTIME"                 = "~3"
-    "FUNCTIONS_EXTENSION_VERSION"              = "~3"
+    "FUNCTIONS_WORKER_RUNTIME"                 = "dotnet"
+    "FUNCTIONS_EXTENSION_VERSION"              = "~4"
     "WEBSITE_NODE_DEFAULT_VERSION"             = "~10"
     "WEBSITE_CONTENTSHARE"                     = var.av_function_app_name
     "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING" = "DefaultEndpointsProtocol=https;AccountName=${azurerm_storage_account.av_storage_account.name};AccountKey=${azurerm_storage_account.av_storage_account.primary_access_key};EndpointSuffix=core.windows.net"
-    "WEBSITE_RUN_FROM_PACKAGE"                 = var.scan_upload_blob_function_url
+    HASH                                       = "${base64encode(filesha256("${var.functionapp_zip}"))}"
+    WEBSITE_RUN_FROM_PACKAGE                   = "https://${azurerm_storage_account.av_storage_account.name}.blob.core.windows.net/${azurerm_storage_container.deployment.name}/${azurerm_storage_blob.functionapp_zip.name}${data.azurerm_storage_account_sas.sas.sas}"
     "av_vm_host"                               = azurerm_windows_virtual_machine.av_vm.private_ip_address
     "av_vm_port"                               = "443",
     "sftp_storage_conn"                        = "DefaultEndpointsProtocol=https;AccountName=${azurerm_storage_account.sftp_storage_account.name};AccountKey=${azurerm_storage_account.sftp_storage_account.primary_access_key};EndpointSuffix=core.windows.net"
@@ -75,7 +78,7 @@ resource "azurerm_windows_function_app" "av_function_app" {
 
   depends_on = [
     azurerm_resource_group.avsftp_rg,
-    azurerm_app_service_plan.av_app_service_plan,
+    azurerm_service_plan.av_app_service_plan,
     azurerm_storage_account.av_storage_account,
     azurerm_storage_account.sftp_storage_account,
     azurerm_windows_virtual_machine.av_vm

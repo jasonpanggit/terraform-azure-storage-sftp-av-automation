@@ -26,19 +26,63 @@ resource "azurerm_storage_account" "sftp_storage_account" {
   depends_on = [azurerm_resource_group.avsftp_rg]
 }
 
-resource "azurerm_storage_container" "new-files" {
+resource "azurerm_storage_container" "deployment" {
+  name                  = "deployment-files"
+  storage_account_name  = azurerm_storage_account.av_storage_account.name
+  container_access_type = "blob"
+}
+resource "azurerm_storage_blob" "functionapp_zip" {
+  #for_each = fileset(path.module, "zip/*")
+
+  name                   = "ScanUploadedBlobFunction"
+  storage_account_name   = azurerm_storage_account.av_storage_account.name
+  storage_container_name = azurerm_storage_container.deployment.name
+  type                   = "Block"
+  source                 = var.functionapp_zip
+}
+
+data "azurerm_storage_account_sas" "sas" {
+  connection_string = azurerm_storage_account.av_storage_account.primary_connection_string
+  https_only        = true
+  start             = "2022-11-02"
+  expiry            = "2022-11-03"
+  resource_types {
+    object    = true
+    container = false
+    service   = false
+  }
+  services {
+    blob  = true
+    queue = false
+    table = false
+    file  = false
+  }
+  permissions {
+    read    = true
+    write   = false
+    delete  = false
+    list    = false
+    add     = false
+    create  = false
+    update  = false
+    process = false
+    tag     = false
+    filter  = false
+  }
+}
+resource "azurerm_storage_container" "new_files" {
   name                  = var.sftp_storage_accounts_new_files_container_name
   storage_account_name  = azurerm_storage_account.sftp_storage_account.name
   container_access_type = "private"
 }
 
-resource "azurerm_storage_container" "quarantine-files" {
+resource "azurerm_storage_container" "quarantine_files" {
   name                  = var.sftp_storage_accounts_quarantine_files_container_name
   storage_account_name  = azurerm_storage_account.sftp_storage_account.name
   container_access_type = "private"
 }
 
-resource "azurerm_storage_container" "clean-files" {
+resource "azurerm_storage_container" "clean_files" {
   name                  = var.sftp_storage_accounts_clean_files_container_name
   storage_account_name  = azurerm_storage_account.sftp_storage_account.name
   container_access_type = "private"
