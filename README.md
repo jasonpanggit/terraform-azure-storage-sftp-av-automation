@@ -1,7 +1,7 @@
-# Azure Storage SFTP with real-time antivirus scanning
+# SFTP for Azure Storage with real-time antivirus scanning
 ##### Authored by: Jason Pang | Updated: Nov 2nd, 2022  
 
-Azure Storage SFTP with real-time antivirus scanning is an terraform template (converted from https://github.com/Azure/azure-storage-av-automation which is an ARM template) that provisions resources in your environment in order to protect an Azure blob container from malware by scanning every blob that’s uploaded via SFTP. The project consists of a function triggered when files are uploaded to or updated in a Blob storage container, and a Windows VM that utilizes Microsoft Defender Antivirus to scan the uploaded/updated files in real-time.
+SFTP for Azure Storage with real-time antivirus scanning is an terraform template (converted from https://github.com/Azure/azure-storage-av-automation which is an ARM template) that provisions resources in your environment in order to protect an Azure blob container from malware by scanning every blob that’s uploaded via SFTP. The project consists of a function triggered when files are uploaded to or updated in a Blob storage container, and a Windows VM that utilizes Microsoft Defender Antivirus to scan the uploaded/updated files in real-time.
 
 <img src="https://raw.githubusercontent.com/Azure/azure-storage-av-automation/main/AvAutoSystem.png"/>
 
